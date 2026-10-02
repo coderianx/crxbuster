@@ -15,6 +15,7 @@ func main() {
 	timeout := flag.Int("t", 10, "Timeout")
 	showVersion := flag.Bool("v", false, "Print version")
 	showHelp := flag.Bool("h", false, "Show help screen")
+	showModes := flag.Bool("modes", false, "Show Modes")
 
 	flag.Usage = helpers.PrintHelp
 
@@ -30,10 +31,18 @@ func main() {
 		return
 	}
 
+	if *showModes {
+		helpers.PrintModes()
+		return
+	}
+
 	switch *mode {
 	case 1:
 		fmt.Println("[INFO] Scan Starting...")
 		commands.ScanURL(*url, *wordlistPath, *timeout)
+	case 2:
+		fmt.Println("[INFO] Subdomain Scan Starting...")
+		commands.ScanSubdomain(*url, *wordlistPath, *timeout)
 	default:
 		helpers.PrintHelp()
 	}
